@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Payroll App</h2>
+
+<input id="name" placeholder="Employee Name">
+<input id="salary" placeholder="Salary">
+
+<br><br>
+
+<button onclick="addEmployee()">Add Employee</button>
+<button onclick="runPayroll()">Run Payroll</button>
+
+<pre id="output"></pre>
+
+<script>
+const API = "http://127.0.0.1:8000";
+
+async function addEmployee() {
+    const name = document.getElementById("name").value;
+    const salary = document.getElementById("salary").value;
+
+    await fetch(`${API}/add_employee?name=${name}&salary=${salary}`, {
+        method: "POST"
+    });
+
+    alert("Employee Added");
+}
+
+async function runPayroll() {
+    const res = await fetch(`${API}/run_payroll`);
+    const data = await res.json();
+
+    document.getElementById("output").innerText =
+        JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>
